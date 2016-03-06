@@ -1,24 +1,25 @@
-	var endTime = new Date(2016,10,8,19,0,0,0);
-	var now = new Date();
-	var endTimestamp = Date.parse(endTime);
-	var endTimestamp = Date.now(); + 10000;
+// Grab Elements By Id's to manipulate innerHTML later
+// Inputing time remaining til doomsday
+
 	var timer = document.getElementById("countdown-wrapper");
-	// var weeks = timer.querySelector("#weeks");
 	var weeks = document.getElementById("weeks");
 	var days = document.getElementById('days');
 	var hours = document.getElementById("hours");
 	var minutes = document.getElementById("minutes");
 	var seconds = document.getElementById("seconds")
 
-
+	
 function timeTillDoomsDay(){
 	
-	// var endTime = new Date(2016,2,4,13,0,0,0);
+	// Define Time Remaining Til Doomsday!!!
+	var endTime = new Date(2016,2,6,13,27,45);
 	var now = new Date();
 	var endTimestamp = Date.parse(endTime);
 	var nowTimestamp = Date.parse(now);
 	var timeDifference = endTimestamp - nowTimestamp;
 	
+	// Set Time remaining in 'weeks','days','hours','minutes','seconds'
+	// Use Math.floor to clip the remainder
 	var timeStampInSeconds = timeDifference / 1000;
 	var seconds = Math.floor (timeStampInSeconds % 60);
 	var minutes = Math.floor((timeStampInSeconds / 60) % 60);  // modulus gets the remainder and puts them in seconds
@@ -36,6 +37,10 @@ function timeTillDoomsDay(){
 	 	seconds : seconds
 	 };
 
+	 if (timeDifference < 1000) {
+	 	clearInterval(interval);
+	 }
+
 	// console.log(endTime);
 	// console.log(endTimestamp);
 	// console.log(timeObject.weeks); //will pull from weeks inside timeObjects array 
@@ -45,16 +50,10 @@ function timeTillDoomsDay(){
 	return timeObject;
 }
 
-function inItTimer(){
-	var timer = document.getElementById("countdown-wrapper");
-	// var weeks = timer.querySelector("#weeks");
-	var weeks = document.getElementById("weeks");
-	var days = document.getElementById('days');
-	var hours = document.getElementById("hours");
-	var minutes = document.getElementById("minutes");
-	var seconds = document.getElementById("seconds")
+function initTimer(){
 
 	var timeObjectReturned = timeTillDoomsDay();
+	
 	weeks.innerHTML = timeObjectReturned.weeks;
 	days.innerHTML = timeObjectReturned.days;
 	hours.innerHTML	= timeObjectReturned.hours;
@@ -63,11 +62,8 @@ function inItTimer(){
 	console.log(timeObjectReturned); 
 
 }
-//updates timer every 1000ms. 1000ms is 1 second.
-function updateTimer(){
-	setInterval(inItTimer,50);
-}
 
-timeTillDoomsDay();
-inItTimer();
-updateTimer();
+
+// updates timer every 1000ms. 1000ms is 1 second.
+
+var interval = setInterval(initTimer, 500);
